@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Камеры</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    iframe {
+      width: 640px;
+      height: 360px;
+      border: none;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Камера сверху</h2>
+  <iframe src="http://127.0.0.1:8889/top" allow="camera; microphone; fullscreen" allowfullscreen></iframe>
+
+  <h2>Камера снизу</h2>
+  <iframe src="http://127.0.0.1:8889/bottom" allow="camera; microphone; fullscreen" allowfullscreen></iframe>
+</body>
+</html>

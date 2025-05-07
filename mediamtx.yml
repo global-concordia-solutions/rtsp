@@ -1,0 +1,14 @@
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+webrtcEncryption: no
+webrtcAllowOrigin: '*'
+
+paths:
+  top:
+    source: rtsp://192.168.1.101:554/stream
+    sourceOnDemand: yes
+
+  bottom:
+    source: rtsp://192.168.1.102:554/stream
+    sourceOnDemand: yes
