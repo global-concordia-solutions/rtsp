@@ -6,9 +6,9 @@ webrtcAllowOrigin: '*'
 
 paths:
   top:
-    source: rtsp://192.168.1.101:554/stream
+    source: rtsp://192.168.1.100/live
     sourceOnDemand: yes
 
   bottom:
-    source: rtsp://192.168.1.102:554/stream
+    source: rtsp://192.168.1.103/live
     sourceOnDemand: yes
