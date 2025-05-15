@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр потока через iframe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .iframe-container {
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+            position: relative;
+            background-color: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        .options {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .stream-options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .stream-option {
+            width: 48%;
+            margin-bottom: 15px;
+        }
+        .note {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .stream-option {
+                width: 100%;
+            }
+        }
+        .direct-links {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+        .direct-links a {
+            display: block;
+            margin-bottom: 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .direct-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Просмотр потока с камеры</h1>
+        
+        <div class="note">
+            <p><strong>Примечание:</strong> Эта страница использует iframe для отображения потока. Проверьте, что у вас нет блокировщиков рекламы или других расширений, которые могут блокировать iframe.</p>
+        </div>
+        
+        <div class="iframe-container">
+            <iframe id="stream-iframe" allowfullscreen></iframe>
+        </div>
+        
+        <div class="controls">
+            <button id="reload" class="button">Перезагрузить поток</button>
+        </div>
+        
+        <div class="options">
+            <div class="form-group">
+                <label for="server">URL сервера:</label>
+                <input type="text" id="server" value="http://51.12.220.174:8889" />
+            </div>
+            
+            <div class="form-group">
+                <label for="stream">Путь потока:</label>
+                <input type="text" id="stream" value="streamD7127c" />
+            </div>
+            
+            <button id="apply" class="button">Применить настройки</button>
+            
+            <div class="direct-links">
+                <h3>Прямые ссылки на поток:</h3>
+                <a id="direct-link" href="http://51.12.220.174:8889/streamD7127c" target="_blank">Открыть поток в новой вкладке</a>
+                <a id="hls-link" href="http://51.12.220.174:8888/streamD7127c" target="_blank">Открыть HLS-поток</a>
+                <p id="rtmp-url"><strong>RTMP (для VLC):</strong> rtmp://51.12.220.174/streamD7127c</p>
+            </div>
+            
+            <div class="stream-options">
+                <div class="stream-option">
+                    <h3>Альтернативные способы просмотра:</h3>
+                    <p>Если iframe не работает, вы можете открыть поток напрямую, нажав на ссылку выше или использовать VLC Media Player для RTMP.</p>
+                </div>
+                <div class="stream-option">
+                    <h3>Информация:</h3>
+                    <p>Эта страница автоматически обновляет iframe при изменении настроек. Для полноэкранного режима нажмите на кнопку полноэкранного режима внутри плеера.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const iframe = document.getElementById('stream-iframe');
+            const serverInput = document.getElementById('server');
+            const streamInput = document.getElementById('stream');
+            const reloadButton = document.getElementById('reload');
+            const applyButton = document.getElementById('apply');
+            const directLink = document.getElementById('direct-link');
+            const hlsLink = document.getElementById('hls-link');
+            const rtmpUrl = document.getElementById('rtmp-url');
+            
+            // Функция для обновления iframe с потоком
+            function updateStream() {
+                const serverUrl = serverInput.value;
+                const streamPath = streamInput.value;
+                
+                // Формируем полный URL потока
+                const streamUrl = `${serverUrl}/${streamPath}`;
+                
+                // Обновляем iframe
+                iframe.src = streamUrl;
+                
+                // Обновляем прямые ссылки
+                directLink.href = streamUrl;
+                directLink.textContent = `Открыть поток напрямую (${streamUrl})`;
+                
+                // Обновляем HLS ссылку (предполагаем, что HLS порт 8888)
+                const hlsServer = serverUrl.replace(':8889', ':8888');
+                hlsLink.href = `${hlsServer}/${streamPath}`;
+                hlsLink.textContent = `Открыть HLS-поток (${hlsServer}/${streamPath})`;
+                
+                // Обновляем RTMP ссылку
+                const rtmpServer = serverUrl.replace('http://', 'rtmp://').replace(':8889', '');
+                rtmpUrl.innerHTML = `<strong>RTMP (для VLC):</strong> ${rtmpServer}/${streamPath}`;
+            }
+            
+            // Обработчики событий
+            reloadButton.addEventListener('click', function() {
+                updateStream();
+            });
+            
+            applyButton.addEventListener('click', function() {
+                updateStream();
+            });
+            
+            // Инициализация при загрузке страницы
+            updateStream();
+        });
+    </script>
+</body>
+</html>

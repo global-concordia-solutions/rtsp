@@ -1,0 +1,39 @@
+###############################################
+# Global settings
+###############################################
+logLevel: info
+logDestinations: [stdout]
+readTimeout: 10s
+writeTimeout: 10s
+writeQueueSize: 512
+udpMaxPayloadSize: 1472
+
+###############################################
+# Protocols
+###############################################
+rtsp: no
+rtmp: yes
+hls: yes                     # Включаем HLS для просмотра в браузере
+hlsAddress: :8888            # Порт для HLS
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+webrtcEncryption: no
+webrtcAllowOrigin: "*"
+
+# Правильный формат для ICE серверов в вашей версии
+webrtcICEServers2:
+  - url: stun:stun.l.google.com:19302
+    # username: ''  # раскомментируйте если нужно
+    # password: ''  # раскомментируйте если нужно
+
+api: yes
+apiAddress: :9997
+
+###############################################
+# Path settings
+###############################################
+paths:
+  all:
+    source: publisher
+    # sourceProtocol: rtmp

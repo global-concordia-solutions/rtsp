@@ -1,0 +1,43 @@
+###############################################
+# Global settings
+###############################################
+logLevel: info
+logDestinations: [stdout]
+readTimeout: 10s
+writeTimeout: 10s
+writeQueueSize: 512
+udpMaxPayloadSize: 1472
+
+###############################################
+# Protocols (enabled by default, but made explicit)
+###############################################
+
+rtsp: false
+rtmp: yes
+hls: false
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+webrtcEncryption: no
+webrtcAllowOrigin: '*'
+
+api: yes
+apiAddress: :9997
+
+###############################################
+# WebRTC settings (optional tuning)
+###############################################
+#webrtcICEServers:
+#  - urls: [stun:stun.l.google.com:19302]
+
+###############################################
+# Path settings — allow RTMP input and WebRTC output
+###############################################
+paths:
+  all:
+    source: publisher
+  stream:
+    source: publisher
+    #sourceProtocol: rtmp
+    # Можно ограничить протоколы, если хочешь (необязательно)
+    # protocols: [rtmp, webrtc, rtsp]
