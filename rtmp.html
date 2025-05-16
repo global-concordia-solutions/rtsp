@@ -28,7 +28,7 @@
         .iframe-container {
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 соотношение сторон */
+            padding-bottom: 46.25%; /* 16:9 соотношение сторон */
             position: relative;
             background-color: #000;
             border-radius: 6px;
@@ -121,12 +121,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Просмотр потока с камеры</h1>
+        <h1>Просмотр потока с камер</h1>
         
-        <div class="note">
+        <!-- <div class="note">
             <p><strong>Примечание:</strong> Эта страница использует iframe для отображения потока. Проверьте, что у вас нет блокировщиков рекламы или других расширений, которые могут блокировать iframe.</p>
-        </div>
-        
+        </div> -->
+        <h2>Камера streamD7127c</h2>
         <div class="iframe-container">
             <iframe id="stream-iframe" allowfullscreen></iframe>
         </div>
@@ -137,11 +137,11 @@
             <iframe src="http://51.12.220.174:8889/streamD7189b" allowfullscreen></iframe>
         </div>
         
-        <div class="controls">
+        <!-- <div class="controls">
             <button id="reload" class="button">Перезагрузить поток</button>
-        </div>
+        </div> -->
         
-        <div class="options">
+        <!-- <div class="options">
             <div class="form-group">
                 <label for="server">URL сервера:</label>
                 <input type="text" id="server" value="http://51.12.220.174:8889" />
@@ -159,9 +159,9 @@
                 <a id="direct-link" href="http://51.12.220.174:8889/streamD7127c" target="_blank">Открыть поток в новой вкладке</a>
                 <a id="hls-link" href="http://51.12.220.174:8888/streamD7127c" target="_blank">Открыть HLS-поток</a>
                 <p id="rtmp-url"><strong>RTMP (для VLC):</strong> rtmp://51.12.220.174/streamD7127c</p>
-            </div>
+            </div> -->
             
-            <div class="stream-options">
+            <!-- <div class="stream-options">
                 <div class="stream-option">
                     <h3>Альтернативные способы просмотра:</h3>
                     <p>Если iframe не работает, вы можете открыть поток напрямую, нажав на ссылку выше или использовать VLC Media Player для RTMP.</p>
@@ -170,7 +170,7 @@
                     <h3>Информация:</h3>
                     <p>Эта страница автоматически обновляет iframe при изменении настроек. Для полноэкранного режима нажмите на кнопку полноэкранного режима внутри плеера.</p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
